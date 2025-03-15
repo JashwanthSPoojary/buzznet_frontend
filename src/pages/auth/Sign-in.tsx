@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api, isAxios, AxiosErrorResponse } from "../../util/api";
 import { useNavigate, Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
@@ -13,6 +13,11 @@ const SignIn = () => {
   const [error, setError] = useState<string>("");
   const [isGoogleDirecting, setIsGoogleDirecting] = useState<boolean>(false);
 
+  useEffect(()=>{ 
+    console.log(error);
+    
+  },[error])
+
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +30,7 @@ const SignIn = () => {
       if (response) {
         localStorage.setItem("buzznettoken", response.data.token);
       }
+      console.log(localStorage.getItem("buzznettoken"));
       if (response.status === 201) {
         const firstWorkspaceId = await api.get("/workspace/workspaceIds", {
           headers: { token: token },
@@ -68,7 +74,7 @@ const SignIn = () => {
         </h1>
         {error && (
           <span className="text-[#f04747] text-sm mb-4 block text-center">
-            {error}
+            {JSON.stringify(error)}
           </span>
         )}
         <form onSubmit={onSubmit} className="space-y-4">
