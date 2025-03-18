@@ -15,17 +15,17 @@ const Googleauth = () => {
         const redirect = async () =>{
             const queryParams = new URLSearchParams(location.search);
             const token = queryParams.get("token");
-            
-            if(token){
+
+            if(!token) return; 
                 try {
-                    localStorage.setItem("buzznettoken",token)
+                  localStorage.setItem("buzznettoken",token);
                     const firstWorkspaceId = await api.get('/workspace/workspaceIds',{headers:{token:token}});
                     if(!firstWorkspaceId){
-                        throw new Error("not able to get first workspace")
+                      setError("not able to get first workspace")
                     }
                     const firstChannelId = await api.get(`/workspace/${firstWorkspaceId.data.data.id}/channel/channelIds`,{headers:{token:token}});
                     if(!firstChannelId){
-                        throw new Error("not able to get first channel")
+                        setError("not able to get first channel")
                     }
                     navigate(`/workspaces/${firstWorkspaceId.data.data.id}/channels/${firstChannelId.data.data.id}`,{replace:true})
                 } catch (error) {
@@ -34,10 +34,7 @@ const Googleauth = () => {
                 }finally{
                     setLoading(false);
                 }
-            }else{
-                await navigate('/signin')
-            }
-            }
+              }
             redirect();
     });
 
