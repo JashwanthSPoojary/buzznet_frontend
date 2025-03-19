@@ -5,6 +5,7 @@ import { useUserStore } from "./user-slice";
 import { useWebsocketStore } from "./ws-slice";
 import { useNavigate } from "react-router-dom";
 import { useWorkspaceStore } from "./workspace-slice";
+import { generateRandomString } from "../../util/generate";
 
 interface CallStore {
   // State
@@ -52,7 +53,8 @@ export const useCallStore = create<CallStore>((set, get) => ({
   console.log("WebSocket state:", ws?.readyState);
 
     if (userId && ws) {
-      const peer = createPeerInstance(userId + "");
+      const randomId = generateRandomString(8);
+      const peer = createPeerInstance(randomId);
 
       peer.on("open", (id: string) => {
         console.log("Connected with PeerJS ID:", id);
