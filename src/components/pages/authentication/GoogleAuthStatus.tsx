@@ -27,8 +27,8 @@ const GoogleAuthStatus = ({ isLoading, error }: { isLoading: boolean; error?: st
         </>
       ) : (
         <>
-          <p className="text-4xl sm:text-6xl font-bold text-green-500">Success!</p>
-          <p className="text-lg sm:text-xl text-gray-500 mt-2">Redirecting...</p>
+          <Loader2 className="w-16 h-16 animate-spin text-gray-500 sm:w-20 sm:h-20" />
+          <p className="text-lg sm:text-xl text-gray-500 mt-4">Processing authentication...</p>
         </>
       )}
     </div>

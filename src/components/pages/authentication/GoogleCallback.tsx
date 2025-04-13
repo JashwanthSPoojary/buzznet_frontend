@@ -29,12 +29,12 @@ const GoogleCallback = () => {
                 token
             }
         });
-        console.log(res);
         if(res.status!==200){
             setError("Unauthorized to proceed");
             return
         }
-        navigate(`/workspace/${res.data.workspaceId}/channel/${res.data.channelId}`);
+        console.log("setting the token");
+        window.location.href = `/workspace/${res.data.workspaceId}/channel/${res.data.channelId}`;
       } catch (err) {
         setError("Authentication processing failed");
         console.error(err);

@@ -1,9 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LandingPage from '../pages/landingPage/LandingPage';
-import Signin from '@/pages/authentication/Signin';
+import LandingPage from '../pages/LandingPage';
+import Signin from '@/pages/Signin';
 import PageNotFound from '@/components/pages/error/PageNotFound';
 import GoogleCallback from '@/components/pages/authentication/GoogleCallback';
-import Dashboard from '@/pages/dashboard/Dashboard';
+import Protectedroute from '@/components/basic/ProtectedRoute';
+import Dashboard from '@/pages/Dashboard';
+import ChannelMessage from '@/components/pages/dashboard/channel/ChannelMessage';
+import InvitePage from '@/pages/InviteMember';
 
 
 // Create routes configuration
@@ -18,6 +21,16 @@ const router = createBrowserRouter([
       // Add more routes as needed
     ],
   },{
+    path: '/invite/:invitetoken',
+    children: [
+      {
+        index: true, // This makes it the default route for the parent path
+        element: <InvitePage />,
+      },
+      // Add more routes as needed
+    ],
+  },
+  {
     path:'/signin',
     children:[
       {
@@ -43,11 +56,12 @@ const router = createBrowserRouter([
       }
     ]
   },{
-    path:'/workspace/:workspaceId/channel/:channelId',
+    path:'/workspace/:workspaceId',
+    element:<Protectedroute><Dashboard/></Protectedroute>,
     children:[
       {
-        index: true, 
-        element: <Dashboard />,  
+        path:'channel/:channelId',
+        element: <ChannelMessage/>,  
       }
     ]
   },

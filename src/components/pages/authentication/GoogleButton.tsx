@@ -22,7 +22,7 @@ export default function GoogleAuth() {
     <div className="flex justify-center items-center bg-transparent">
       <Button
         onClick={handleGoogleLogin}
-        className="flex items-center justify-center gap-6 px-12 py-6 text-2xl font-bold border-2 border-gray-300 rounded-2xl shadow-lg bg-foreground hover:bg-foreground/90 transition-all duration-300"
+        className="cursor-pointer flex items-center justify-center gap-6 px-12 py-6 text-2xl font-bold border-2 border-gray-300 rounded-2xl shadow-lg bg-foreground hover:bg-foreground/90 transition-all duration-300"
       >
         {loading ? (
           <Loader className="w-10 h-10 animate-spin text-background" />

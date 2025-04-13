@@ -19,7 +19,7 @@ export default function Footer() {
           </p>
 
           <Link
-            to="/"
+            to="/signin"
             className="inline-flex items-center gap-2 bg-background text-primary hover:bg-background/90 px-6 py-3 rounded-md transition-colors"
           >
             SignIn <ArrowRight className="h-4 w-4" />
