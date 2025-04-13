@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
-import { ArrowRight, Check, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react";
+import { ArrowRight, Check, Loader2, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
-} from "@/components/ui/card"
+  CardTitle,
+} from "@/components/ui/card";
 import { useNavigate, useParams } from "react-router-dom";
 import { token } from "@/lib/authenticated";
 import { api } from "@/lib/api";
@@ -20,7 +20,7 @@ export default function InvitePage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
-  
+
   const handleSubmit = async () => {
     try {
       const response = await api.post(
@@ -50,7 +50,6 @@ export default function InvitePage() {
         `/workspaces/${firstWorkspaceId.data.data.id}/channels/${firstChannelId.data.data.id}`,
         { replace: true }
       );
-
     } catch (error) {
       console.log(error);
       setError("Failed to join workspace");
@@ -58,7 +57,6 @@ export default function InvitePage() {
   };
 
   const firstLetter = name.charAt(0);
-
 
   useEffect(() => {
     const fetchInviteDetails = async () => {
@@ -86,8 +84,30 @@ export default function InvitePage() {
     fetchInviteDetails();
   }, [navigate, invitetoken]);
 
-  if (loading) return <div>...loading</div>;
-  if (error) return <div>{error}</div>;
+  if (loading)
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-center px-4">
+        <Loader2 className="w-16 h-16 animate-spin text-gray-500 sm:w-20 sm:h-20" />
+        <p className="text-lg sm:text-xl text-gray-500 mt-4">Loading...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-center px-4">
+        <p className="text-4xl sm:text-6xl font-bold text-red-500">{error}</p>
+        <div className="mt-6 w-full flex justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm justify-center">
+            <Button
+              onClick={() => navigate("/")}
+              className="px-6 py-3 text-lg w-full sm:w-auto"
+            >
+              Go Home
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4 md:p-8">
@@ -99,7 +119,9 @@ export default function InvitePage() {
             </div>
             <CardTitle className="text-xl">Workspace Invitation</CardTitle>
           </div>
-          <CardDescription className="pt-2">You&apos;ve been invited to join the workspace</CardDescription>
+          <CardDescription className="pt-2">
+            You&apos;ve been invited to join the workspace
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="rounded-lg border bg-card p-4">
@@ -130,5 +152,5 @@ export default function InvitePage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
