@@ -15,7 +15,13 @@ import { api } from "@/lib/api";
 import { token } from "@/lib/authenticated";
 import { ClipboardSignature } from "lucide-react";
 
-const InviteModal = ({inviteModal,setInviteModal}:{inviteModal:boolean,setInviteModal:React.Dispatch<React.SetStateAction<boolean>>}) => {
+const InviteModal = ({
+  inviteModal,
+  setInviteModal
+}: {
+  inviteModal: boolean;
+  setInviteModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { selectedWorkspace } = useWorkspaceStore();
   const [inviteLink, setInviteLink] = useState("");
 
@@ -23,7 +29,7 @@ const InviteModal = ({inviteModal,setInviteModal}:{inviteModal:boolean,setInvite
     navigator.clipboard
       .writeText(inviteLink)
       .then(() => console.log("Invitation copied"))
-      .catch(() => console.log("Failed to copy"))
+      .catch(() => console.log("Failed to copy"));
   };
 
   const handleSubmit = async () => {
@@ -34,7 +40,7 @@ const InviteModal = ({inviteModal,setInviteModal}:{inviteModal:boolean,setInvite
         { headers: { token: token } }
       );
       setInviteLink(response.data.data);
-      console.log("invitation generated");
+      console.log("Invitation generated");
     } catch (error) {
       console.log("Failed to generate");
       console.error(error);
@@ -43,39 +49,69 @@ const InviteModal = ({inviteModal,setInviteModal}:{inviteModal:boolean,setInvite
 
   return (
     <Dialog open={inviteModal} onOpenChange={setInviteModal}>
-      <DialogContent className="sm:max-w-[500px] ">
+      <DialogContent
+        className="sm:max-w-[500px]"
+        style={{ background: "var(--color-card)", color: "var(--color-card-foreground)" }}
+      >
         <DialogHeader>
-          <DialogTitle className="text-white">Invite Members</DialogTitle>
-          <DialogDescription className="text-gray-400">
+          <DialogTitle className="text-[var(--color-primary)]">Invite Members</DialogTitle>
+          <DialogDescription className="text-[var(--color-muted-foreground)]">
             Generate a link to invite members to this workspace.
           </DialogDescription>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="invite-link" className="text-[#b9bbbe]">Invite Link</Label>
+            <Label htmlFor="invite-link" className="text-[var(--color-muted-foreground)]">
+              Invite Link
+            </Label>
             <div className="relative">
               <Input
                 id="invite-link"
                 value={inviteLink}
                 readOnly
                 onClick={copyInviteLink}
-                className="pr-10 bg-[#192e4a] text-[#dcddde] placeholder-[#72767d] border border-[#040405] focus:ring-[#3ba55c]"
+                className="pr-10 border"
+                style={{
+                  background: "var(--color-input)",
+                  color: "var(--color-foreground)",
+                  borderColor: "var(--color-border)"
+                }}
                 placeholder="Generate an invite link"
               />
               <div
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 onClick={copyInviteLink}
               >
-                <ClipboardSignature className="text-gray-400" size={16} />
+                <ClipboardSignature
+                  className="text-[var(--color-muted-foreground)]"
+                  size={16}
+                />
               </div>
             </div>
           </div>
         </div>
+
         <DialogFooter>
-          <Button variant="outline" onClick={() => setInviteModal(false)}>
+          <Button
+            variant="outline"
+            onClick={() => setInviteModal(false)}
+            style={{
+              background: "var(--color-muted)",
+              color: "var(--color-muted-foreground)",
+              borderColor: "var(--color-border)"
+            }}
+          >
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={!!inviteLink}>
+          <Button
+            onClick={handleSubmit}
+            disabled={!!inviteLink}
+            style={{
+              background: "var(--color-primary)",
+              color: "var(--color-primary-foreground)"
+            }}
+          >
             Generate
           </Button>
         </DialogFooter>

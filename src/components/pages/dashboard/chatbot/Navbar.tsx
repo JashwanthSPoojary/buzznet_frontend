@@ -1,8 +1,10 @@
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Bot } from "lucide-react";
 
 const Navbar = () => {
   return (
     <div className="flex h-16 shrink-0 items-center border-b px-4">
+      <SidebarTrigger className="-ml-1 mr-2" />
       <div className="flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
           <Bot className="h-5 w-5 text-primary" />

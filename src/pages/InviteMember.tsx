@@ -32,22 +32,14 @@ export default function InvitePage() {
         setError(response.data.error || "Failed to join workspace");
         return;
       }
-      const firstWorkspaceId = await api.get("/workspace/workspaceIds", {
-        headers: { token: token },
-      });
-      if (!firstWorkspaceId) {
-        throw new Error("not able to get first workspace");
-      }
-      const firstChannelId = await api.get(
-        `/workspace/${firstWorkspaceId.data.data.id}/channel/channelIds`,
-        { headers: { token: token } }
-      );
-      if (!firstChannelId) {
-        throw new Error("not able to get first channel");
-      }
+      const res = await api.get('/user/fetchIds',{
+        headers:{
+            token
+        }
+    });
       setJoined(true);
       navigate(
-        `/workspaces/${firstWorkspaceId.data.data.id}/channels/${firstChannelId.data.data.id}`,
+        `/workspace/${res.data.workspaceId}/channel/${res.data.channelId}`,
         { replace: true }
       );
     } catch (error) {

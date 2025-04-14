@@ -52,6 +52,9 @@ export default function Footer() {
           <p className="text-sm">
             Made with <span className="text-red-500">❤️</span> by the Jashwanth S Poojary
           </p>
+          <p className="text-sm">
+            Landing was inspired by <span className="text-red-500">zen browser</span>
+          </p>
         </div>
       </div>
       <div className="absolute right-0 bottom-0 w-48 h-48 pointer-events-none">
