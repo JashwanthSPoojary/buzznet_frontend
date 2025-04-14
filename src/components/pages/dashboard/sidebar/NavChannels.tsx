@@ -164,7 +164,7 @@ export function NavChannels() {
                   <Button
                     variant="ghost"
                     className="w-full justify-start text-destructive"
-                    onClick={() => handleDeleteChannel(channel.id)}
+                    onClick={() => handleDeleteChannel()}
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
                     Delete Channel

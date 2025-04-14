@@ -14,9 +14,10 @@ interface MemberState {
   setMembers: (members: Member[]) => void;
   setSelectedMember: (memberId: number | undefined) => void;
   fetchMembers: (workspaceId: number | undefined) => Promise<void>;
+  getCurrentMember: () => Member | undefined;
 }
 
-export const useMemberStore = create<MemberState>((set) => ({
+export const useMemberStore = create<MemberState>((set,get) => ({
   members: [],
   selectedMember: undefined,
   setMembers: (members) => set(() => ({ members })),
@@ -38,5 +39,9 @@ export const useMemberStore = create<MemberState>((set) => ({
     } catch (error) {
       console.error("Error fetching members:", error);
     }
+  },
+  getCurrentMember:()=>{
+    const { selectedMember,members } = get();
+    return members.find((member) => member.id === selectedMember);
   },
 }));

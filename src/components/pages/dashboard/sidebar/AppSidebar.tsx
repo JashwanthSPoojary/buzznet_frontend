@@ -25,6 +25,7 @@ import { handleLogout, useWorkspaceActions } from "@/hooks/useWorkspaceActions";
 import { SidebarDropdownMenu } from "./SidebarDropdown";
 import { NavDirectMessages } from "./NavDirectMessages";
 import InviteModal from "../modals/InviteModal";
+import { NavChatbot } from "./NavChatbot";
 
 const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         />
         <NavChannels />
         <NavDirectMessages setInvite={setInviteWorkspaceOpen}/> 
+        <NavChatbot/>
       </SidebarContent>
       <SidebarFooter>
         <div className="flex items-center justify-between p-2">

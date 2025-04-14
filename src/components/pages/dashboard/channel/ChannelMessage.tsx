@@ -100,8 +100,7 @@ const ChannelMessage = () => {
   }, [ws,selectedChannel]);
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
-
+  }, [messages]);
 
   return (
     <>

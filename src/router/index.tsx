@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import LandingPage from '../pages/LandingPage';
 import Signin from '@/pages/Signin';
 import PageNotFound from '@/components/pages/error/PageNotFound';
@@ -7,10 +7,16 @@ import Protectedroute from '@/components/basic/ProtectedRoute';
 import Dashboard from '@/pages/Dashboard';
 import ChannelMessage from '@/components/pages/dashboard/channel/ChannelMessage';
 import InvitePage from '@/pages/InviteMember';
+import DirectMessage from '@/components/pages/dashboard/dm/DirectMessage';
+import Chatbot from '@/components/pages/dashboard/chatbot/Chatbot';
 
 
 // Create routes configuration
 const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <PageNotFound />
+  },
   {
     path: '/',
     children: [
@@ -60,11 +66,23 @@ const router = createBrowserRouter([
     element:<Protectedroute><Dashboard/></Protectedroute>,
     children:[
       {
+        index: true,
+        element: <Navigate to="chatbot" replace />
+      },
+      {
         path:'channel/:channelId',
         element: <ChannelMessage/>,  
-      }
+      },{
+        path:'dm/:dmId',
+        element: <DirectMessage/>,  
+      },
+      {
+        path:'chatbot',
+        element: <Chatbot/>,  
+      },
+      
     ]
-  },
+  }
 
 ]);
 
