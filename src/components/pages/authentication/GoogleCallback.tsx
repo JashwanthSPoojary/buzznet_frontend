@@ -34,7 +34,9 @@ const GoogleCallback = () => {
             return
         }
         console.log("setting the token");
-        window.location.href = `/workspace/${res.data.workspaceId}/channel/${res.data.channelId}`;
+        if(res.status==200) {
+          window.location.href = `/workspace/${res.data.workspaceId}/channel/${res.data.channelId}`;
+        }
       } catch (err) {
         setError("Authentication processing failed");
         console.error(err);
