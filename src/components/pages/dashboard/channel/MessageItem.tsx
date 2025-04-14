@@ -56,7 +56,7 @@ export function MessageItem({
     >
       {!isCurrentUser && (
         <Avatar className="h-10 w-10 shrink-0">
-          <AvatarFallback>{sender.charAt(0)}</AvatarFallback>
+          <AvatarFallback className="bg-secondary-foreground">{sender.charAt(0)}</AvatarFallback>
         </Avatar>
       )}
 

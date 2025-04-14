@@ -1,5 +1,3 @@
-import { Avatar } from "@/components/ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Bot } from "lucide-react";
 
 const MessageItem = ({ author, content }: { author: string; content: string }) => {
@@ -28,17 +26,10 @@ const MessageItem = ({ author, content }: { author: string; content: string }) =
             })}
           </span>
         </div>
-        <p className={`text-sm p-2 rounded-lg ${isUser ? "bg-primary text-white" : "bg-muted"}`}>
+        <p className={`text-sm p-2 rounded-lg ${isUser ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
           {content}
         </p>
       </div>
-
-      {/* User Avatar */}
-      {isUser && (
-        <Avatar className="h-10 w-10">
-          <AvatarFallback>U</AvatarFallback>
-        </Avatar>
-      )}
     </div>
   );
 };

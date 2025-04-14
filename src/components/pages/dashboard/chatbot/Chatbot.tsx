@@ -4,6 +4,7 @@ import { api } from "@/lib/api";
 import { token } from "@/lib/authenticated";
 import MessageItem from "./MessageItem";
 import { ChatInput } from "./ChatInput";
+import { ChatbotWelcome } from "../WelcomeHeaders";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState<
@@ -41,6 +42,7 @@ const Chatbot = () => {
             ref={messagesContainerRef}
             className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4"
           >
+            <ChatbotWelcome name="Buzzbot"/> 
             {messages.map((message,index) => (
               <MessageItem author={message.author} content={message.content} key={index}/>
             ))}

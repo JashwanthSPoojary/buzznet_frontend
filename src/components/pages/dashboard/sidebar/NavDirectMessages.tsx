@@ -57,7 +57,7 @@ export function NavDirectMessages({setInvite}:{setInvite:React.Dispatch<React.Se
                   >
                     <span className="relative flex h-6 w-6 shrink-0 overflow-hidden rounded-full">
                       <Avatar className="h-6 w-6">
-                        <AvatarFallback>
+                        <AvatarFallback className="bg-secondary-foreground">
                           {member.username.charAt(0)}
                         </AvatarFallback>
                       </Avatar>

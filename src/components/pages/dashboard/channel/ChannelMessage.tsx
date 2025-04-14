@@ -1,11 +1,12 @@
 import { useChannelStore, useWorkspaceStore } from "@/store";
-import Navbar from "../Navbar";
+import Navbar from "./Navbar";
 import { ChatInput } from "./ChatInput";
 import { useMessageStore } from "@/store/slices/message-store";
 import { useWebsocketStore } from "@/store/slices/ws-store";
 import { useEffect, useMemo, useRef } from "react";
 import { useUserStore } from "@/store/slices/user-store";
 import { MessageItem } from "./MessageItem";
+import { ChannelWelcome } from "../WelcomeHeaders";
 
 const ChannelMessage = () => {
   const channelName = useChannelStore(
@@ -108,7 +109,8 @@ const ChannelMessage = () => {
       <div className="flex flex-1 flex-col">
         <div className="flex-1 overflow-y-auto p-4">
         <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4">
-            {/* Message 1 */}
+        <ChannelWelcome name={channelName}/>
+        {/* Message 1 */}
             {messages.map((message) => (
               <MessageItem
               key={message.id}
@@ -123,7 +125,7 @@ const ChannelMessage = () => {
             <div ref={messagesEndRef} />
           </div>
         </div>
-        <div className="border-t p-4 sticky bottom-0 bg-background z-10">
+        <div className="border-t p-4 sticky bottom-0 z-10">
           <ChatInput channelName={channelName} onSendMessage={handleSubmit} />
         </div>
       </div>

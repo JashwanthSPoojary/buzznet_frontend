@@ -62,7 +62,7 @@ export function ChatInput({ channelName, recipientName, onSendMessage, className
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={`Message ${channelName ? `#${channelName}` : recipientName}`}
-          className="min-h-10 resize-none rounded-md border bg-background pl-10 pr-20 py-2"
+          className="min-h-10 resize-none rounded-md border pl-10 pr-20 py-2"
           rows={1}
         />
 

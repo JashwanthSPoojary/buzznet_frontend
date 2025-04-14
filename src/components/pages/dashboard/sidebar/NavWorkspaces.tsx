@@ -70,7 +70,7 @@ export function NavWorkspaces({
                 <button
                   className={`flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium transition-colors cursor-pointer ${
                     workspace.id === currentWorkspace?.id
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                      ? "bg-secondary-foreground text-sidebar-primary-foreground"
                       : "bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent/80"
                   }`}
                   onClick={() => onWorkspaceChange(Number(workspace.id))}

@@ -7,6 +7,7 @@ import { useUserStore } from "@/store/slices/user-store";
 import { useWorkspaceStore } from "@/store";
 import { useWebsocketStore } from "@/store/slices/ws-store";
 import { ChatInput } from "./ChatInput";
+import { DirectMessageWelcome } from "../WelcomeHeaders";
 
 const DirectMessage = () => {
   const { messages, fetchMessages, setMessages } = useDMStore();
@@ -105,6 +106,7 @@ const DirectMessage = () => {
             ref={messagesContainerRef}
             className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4"
           >
+            <DirectMessageWelcome name={memberName}/>
             {messages.map((message) => (
               <MessageItem
                 key={message.id}
