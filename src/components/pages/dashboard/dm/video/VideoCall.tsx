@@ -205,7 +205,7 @@ export function VideoCall() {
   return (
     <div className="flex h-full flex-col">
       {/* Call header */}
-      <div className="flex h-16 shrink-0 items-center justify-between border-b px-4">
+      <div className="flex h-16 shrink-0 items-center justify-between border-b px-4 sm:px-6">
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
@@ -220,14 +220,14 @@ export function VideoCall() {
             <AvatarFallback>{memberName?.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-lg font-semibold">{memberName}</h1>
+            <h1 className="text-base sm:text-lg font-semibold">{memberName}</h1>
           </div>
         </div>
       </div>
-
+  
       {/* Video call area */}
-      <div className="relative flex flex-1 flex-col bg-black">
-        {/* Main video (recipient) - remote video stream */}
+      <div className="relative flex flex-1 flex-col bg-black overflow-hidden">
+        {/* Main video */}
         <div className="flex h-full w-full items-center justify-center">
           <video
             ref={remoteVideoRef}
@@ -236,31 +236,29 @@ export function VideoCall() {
             className="h-full w-full object-cover"
           />
           {!isInCall && (
-            <div className="absolute flex flex-col items-center justify-center">
-              <Avatar className="h-32 w-32 mb-4">
-                <AvatarFallback className="text-4xl">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+              <Avatar className="h-24 w-24 sm:h-32 sm:w-32 mb-4">
+                <AvatarFallback className="text-3xl sm:text-4xl">
                   {memberName?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <h2 className="text-white text-xl">{memberName}</h2>
-              { !isInCall && (
-                <Button 
-                  onClick={startCall}
-                  className="mt-4"
-                  variant="secondary"
-                >
-                  Start Call
-                </Button>
-              )}
+              <h2 className="text-white text-lg sm:text-xl">{memberName}</h2>
+              <Button
+                onClick={startCall}
+                className="mt-4"
+                variant="secondary"
+              >
+                Start Call
+              </Button>
             </div>
           )}
         </div>
-
-        {/* Self video (picture-in-picture) */}
-        <div className="absolute bottom-24 right-4 h-48 w-64 overflow-hidden rounded-lg border-2 border-background bg-zinc-900 shadow-lg">
+  
+        {/* Picture-in-picture */}
+        <div className="absolute bottom-24 right-4 w-36 h-24 sm:w-64 sm:h-48 rounded-md sm:rounded-lg overflow-hidden border-2 border-background bg-zinc-900 shadow-md sm:shadow-lg">
           {isVideoOff ? (
             <div className="flex h-full w-full items-center justify-center bg-zinc-800">
-              <Avatar className="h-16 w-16">
+              <Avatar className="h-12 w-12 sm:h-16 sm:w-16">
                 <AvatarFallback>
                   {useMemberStore.getState().getCurrentMember()?.username?.charAt(0) || 'U'}
                 </AvatarFallback>
@@ -276,54 +274,46 @@ export function VideoCall() {
             />
           )}
         </div>
-
+  
         {/* Call controls */}
-        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4 bg-background/10 p-4 backdrop-blur-sm">
+        <div className="absolute bottom-0 left-0 right-0 flex flex-wrap items-center justify-center gap-4 bg-background/10 p-4 backdrop-blur-sm">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant={isMuted ? "destructive" : "secondary"}
                   size="icon"
-                  className="h-12 w-12 rounded-full"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full"
                   onClick={toggleMute}
                 >
-                  {isMuted ? (
-                    <MicOff className="h-5 w-5" />
-                  ) : (
-                    <Mic className="h-5 w-5" />
-                  )}
+                  {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>{isMuted ? "Unmute" : "Mute"}</TooltipContent>
             </Tooltip>
-
+  
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant={isVideoOff ? "destructive" : "secondary"}
                   size="icon"
-                  className="h-12 w-12 rounded-full"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full"
                   onClick={toggleVideo}
                 >
-                  {isVideoOff ? (
-                    <VideoOff className="h-5 w-5" />
-                  ) : (
-                    <Video className="h-5 w-5" />
-                  )}
+                  {isVideoOff ? <VideoOff className="h-5 w-5" /> : <Video className="h-5 w-5" />}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
                 {isVideoOff ? "Turn on camera" : "Turn off camera"}
               </TooltipContent>
             </Tooltip>
-
+  
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant="destructive"
                   size="icon"
-                  className="h-12 w-12 rounded-full"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full"
                   onClick={handleCancel}
                 >
                   <Phone className="h-5 w-5 rotate-135" />
@@ -336,4 +326,5 @@ export function VideoCall() {
       </div>
     </div>
   );
+  
 }
