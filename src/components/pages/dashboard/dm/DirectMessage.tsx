@@ -8,6 +8,7 @@ import { useWorkspaceStore } from "@/store";
 import { useWebsocketStore } from "@/store/slices/ws-store";
 import { ChatInput } from "./ChatInput";
 import { DirectMessageWelcome } from "../WelcomeHeaders";
+import { Loader2 } from "lucide-react";
 
 const DirectMessage = () => {
   const { messages, fetchMessages, setMessages } = useDMStore();
@@ -34,8 +35,8 @@ const DirectMessage = () => {
       return;
     }
     if (!data.message.trim()) {
-        console.error("Message or file must be provided!");
-        return;
+      console.error("Message or file must be provided!");
+      return;
     }
     if (!selectedMember) {
       console.error(
@@ -106,18 +107,30 @@ const DirectMessage = () => {
             ref={messagesContainerRef}
             className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4"
           >
-            <DirectMessageWelcome name={memberName}/>
-            {messages.map((message) => (
-              <MessageItem
-                key={message.id}
-                id={message.id}
-                content={message.content}
-                timestamp={message.created_at}
-                sender={message.sender.username}
-                isCurrentUser={message.sender_id === userId}
-                onDelete={handleDeleteMessage}
-              />
-            ))}
+            {memberName ? (
+              <DirectMessageWelcome name={memberName} />
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <Loader2 className="animate-spin" />
+              </div>
+            )}
+            {messages ? (
+              messages.map((message) => (
+                <MessageItem
+                  key={message.id}
+                  id={message.id}
+                  content={message.content}
+                  timestamp={message.created_at}
+                  sender={message.sender.username}
+                  isCurrentUser={message.sender_id === userId}
+                  onDelete={handleDeleteMessage}
+                />
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <Loader2 className="animate-spin" />
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         </div>
