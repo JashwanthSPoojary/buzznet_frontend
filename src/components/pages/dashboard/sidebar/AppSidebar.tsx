@@ -26,12 +26,16 @@ import { SidebarDropdownMenu } from "./SidebarDropdown";
 import { NavDirectMessages } from "./NavDirectMessages";
 import InviteModal from "../modals/InviteModal";
 import { NavChatbot } from "./NavChatbot";
+import { useChannelStore } from "@/store";
+import { useMemberStore } from "@/store/slices/member-store";
 
 const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const navigate = useNavigate();
   const { createWorkspace, renameWorkspace, deleteWorkspace } =
     useWorkspaceActions();
   const { workspaces, selectedWorkspace } = useWorkspaceStore();
+  const channels = useChannelStore(state=>state.channels);
+  const members = useMemberStore(state=>state.members);
   const workspace = useMemo(() => {
     return workspaces.find((workspace) => workspace.id === selectedWorkspace);
   }, [selectedWorkspace, workspaces]);
@@ -69,7 +73,9 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavWorkspaces
+        {workspaces && channels && members && (
+          <>
+          <NavWorkspaces
           setCreateWorkspaceOpen={setCreateWorkspaceOpen}
           workspaces={workspaces}
           currentWorkspace={workspace}
@@ -77,6 +83,8 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         <NavChannels />
         <NavDirectMessages setInvite={setInviteWorkspaceOpen}/> 
         <NavChatbot/>
+          </>
+        )}
       </SidebarContent>
       <SidebarFooter>
         <div className="flex items-center justify-between p-2">
