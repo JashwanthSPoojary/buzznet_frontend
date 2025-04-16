@@ -9,7 +9,7 @@ import ChannelMessage from '@/components/pages/dashboard/channel/ChannelMessage'
 import InvitePage from '@/pages/InviteMember';
 import DirectMessage from '@/components/pages/dashboard/dm/DirectMessage';
 import Chatbot from '@/components/pages/dashboard/chatbot/Chatbot';
-import VideoCall from '@/components/pages/dashboard/dm/video/VideoCall';
+import { VideoCall } from '@/components/pages/dashboard/dm/video/VideoCall';
 
 
 // Create routes configuration
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path:'dm/:dmId/video',
-        element:<VideoCall/>
+        element:<VideoCall  />
       }
     ]
   }

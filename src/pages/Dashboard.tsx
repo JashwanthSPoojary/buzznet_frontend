@@ -9,14 +9,17 @@ import { Outlet } from "react-router-dom";
 import { useWebsocketStore } from "@/store/slices/ws-store";
 import env from "@/lib/config";
 import { useMemberStore } from "@/store/slices/member-store";
+import { useCallStore } from "@/store/slices/call-store";
+import CallNotification from "@/components/pages/dashboard/dm/video/CallNotification";
 
 const Dashboard = () => {
+  const initializePeer = useCallStore(state=>state.initializePeer);
   const fetchUser = useUserStore((state) => state.fetchUser);
   const fetchWorkspaces = useWorkspaceStore((state) => state.fetchWorkspaces);
   const selectedWorkspace = useWorkspaceStore((state) => state.selectedWorkspace);
   const fetchChannels = useChannelStore((state) => state.fetchChannels);
   const fetchMembers = useMemberStore((state) => state.fetchMembers);
-  const { connect, disconnect } = useWebsocketStore();
+  const { connect, disconnect ,ws } = useWebsocketStore();
   useEffect(() => {
     fetchWorkspaces();
     fetchUser();
@@ -32,10 +35,19 @@ const Dashboard = () => {
       disconnect();
     };
   }, []);
+  useEffect(() => {
+    if (ws?.readyState === WebSocket.OPEN) {
+      console.log("WebSocket is open, initializing peer");
+      initializePeer();
+    } else {
+      console.log("WebSocket not ready:", ws?.readyState);
+    }
+  }, [ws?.readyState]);
 
   return (
     <>
       <RouteHandler />
+      <CallNotification/>
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
