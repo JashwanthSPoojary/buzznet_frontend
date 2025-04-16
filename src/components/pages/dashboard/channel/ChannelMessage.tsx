@@ -7,25 +7,27 @@ import { useEffect, useMemo, useRef } from "react";
 import { useUserStore } from "@/store/slices/user-store";
 import { MessageItem } from "./MessageItem";
 import { ChannelWelcome } from "../WelcomeHeaders";
+import { Loader2 } from "lucide-react";
 
 const ChannelMessage = () => {
   const channelName = useChannelStore(
     (state) => state.getCurrentChannel()?.name
   );
-  const { messages,setMessages,fetchMessages } = useMessageStore();
+  const { messages, setMessages, fetchMessages } = useMessageStore();
   const { sendMessage, ws } = useWebsocketStore();
   const { selectedChannel } = useChannelStore();
-  const selectedWorkspace  =  useWorkspaceStore(state=>state.selectedWorkspace);
+  const selectedWorkspace = useWorkspaceStore(
+    (state) => state.selectedWorkspace
+  );
   const userId = useUserStore((state) => state.user?.id);
   const sender = useMemo(() => userId, [userId]);
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleSubmit = (data: { message: string }) => {
-
     if (!ws || ws.readyState !== WebSocket.OPEN) {
       console.error("WebSocket is not connected.");
       return;
@@ -54,9 +56,7 @@ const ChannelMessage = () => {
       console.error(error);
     }
   };
-  const handleDeleteMessage = () => {
-
-  }
+  const handleDeleteMessage = () => {};
 
   useEffect(() => {
     if (!selectedWorkspace || !selectedChannel) return;
@@ -68,18 +68,18 @@ const ChannelMessage = () => {
   }, [selectedChannel, selectedWorkspace]);
   useEffect(() => {
     if (!ws) return;
-    if(!selectedChannel) return;
+    if (!selectedChannel) return;
 
     const handleOpen = () => {
       console.log("channel message ws open");
       ws.send(
         JSON.stringify({ type: "join-channel", channelId: selectedChannel })
       );
-    }      
-    if(ws.readyState === WebSocket.OPEN){        
+    };
+    if (ws.readyState === WebSocket.OPEN) {
       handleOpen();
-    }else{
-      ws.addEventListener("open",handleOpen);
+    } else {
+      ws.addEventListener("open", handleOpen);
     }
 
     const handleMessage = (event: MessageEvent) => {
@@ -98,9 +98,9 @@ const ChannelMessage = () => {
       ws.removeEventListener("open", handleOpen);
       ws.removeEventListener("message", handleMessage);
     };
-  }, [ws,selectedChannel]);
+  }, [ws, selectedChannel]);
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, [messages]);
 
   return (
@@ -108,20 +108,32 @@ const ChannelMessage = () => {
       <Navbar channelName={channelName} />
       <div className="flex flex-1 flex-col">
         <div className="flex-1 overflow-y-auto p-4">
-        <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4">
-        <ChannelWelcome name={channelName}/>
-        {/* Message 1 */}
-            {messages.map((message) => (
+          <div
+            ref={messagesContainerRef}
+            className="flex-1 overflow-y-auto p-4 flex flex-col space-y-4"
+          >
+            {channelName ? (
+              <ChannelWelcome name={channelName} />
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <Loader2 className="animate-spin " />
+              </div>
+            )}
+            {messages?messages.map((message) => (
               <MessageItem
-              key={message.id}
-              id={message.id}
-              content={message.content}
-              timestamp={message.created_at}
-              sender={message.sender.username}
-              isCurrentUser={message.sender.id === userId}
-              onDelete={handleDeleteMessage}
-            />
-            ))}
+                key={message.id}
+                id={message.id}
+                content={message.content}
+                timestamp={message.created_at}
+                sender={message.sender.username}
+                isCurrentUser={message.sender.id === userId}
+                onDelete={handleDeleteMessage}
+              />
+            )):(
+              <div className="flex flex-col items-center justify-center">
+                <Loader2 className="animate-spin " />
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         </div>
