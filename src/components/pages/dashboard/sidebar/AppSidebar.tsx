@@ -6,7 +6,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { LogOut, Moon, Sun } from "lucide-react";
+import { Loader, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWorkspaceStore } from "@/store/slices/workspace-store";
 import { NavWorkspaces } from "../sidebar/NavWorkspaces";
@@ -73,7 +73,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {workspaces && channels && members && (
+        {workspaces && channels && members ? (
           <>
           <NavWorkspaces
           setCreateWorkspaceOpen={setCreateWorkspaceOpen}
@@ -84,7 +84,11 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         <NavDirectMessages setInvite={setInviteWorkspaceOpen}/> 
         <NavChatbot/>
           </>
-        )}
+        ):
+        <div className="flex flex-col items-center justify-center">
+                <Loader className="animate-spin" />
+              </div>
+        }
       </SidebarContent>
       <SidebarFooter>
         <div className="flex items-center justify-between p-2">
