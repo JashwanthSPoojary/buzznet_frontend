@@ -69,26 +69,30 @@ Buzznet is a real-time communication platform inspired by Discord and Slack. The
 ---
 
 ## Getting Started
-
-### 1. Create your environment file
+### 1. Clone the repository**  
+   ```bash
+   git clone https://github.com/JashwanthSPoojary/Ai-Interview-simulation.git
+   cd Ai-Interview-simulation
+   ```
+### 2. Create your environment file
 
 In the root directory, create a `.env` file.  
 Use `.env.example` as a reference and add your credentials to `.env`.
 
-### 2. Setup the database
+### 3. Setup the database
 
 ```bash
 npx prisma migrate deploy
 npx prisma generate
 ```
 
-### 3. Run the development server
+### 4. Run the development server
 
 ```bash
 npm run dev
 ```
 
-### 4. Open the app
+### 5. Open the app
 
 Go to [http://localhost:3000](http://localhost:3000) in your browser.
 
