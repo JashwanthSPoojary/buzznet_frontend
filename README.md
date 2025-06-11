@@ -71,8 +71,8 @@ Buzznet is a real-time communication platform inspired by Discord and Slack. The
 ## Getting Started
 ### 1. Clone the repository**  
    ```bash
-   git clone https://github.com/JashwanthSPoojary/Ai-Interview-simulation.git
-   cd Ai-Interview-simulation
+   git clone https://github.com/JashwanthSPoojary/buzznet_frontend.git
+   cd buzznet_frontend
    ```
 ### 2. Create your environment file
 
