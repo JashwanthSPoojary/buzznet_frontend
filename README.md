@@ -79,20 +79,14 @@ Buzznet is a real-time communication platform inspired by Discord and Slack. The
 In the root directory, create a `.env` file.  
 Use `.env.example` as a reference and add your credentials to `.env`.
 
-### 3. Setup the database
 
-```bash
-npx prisma migrate deploy
-npx prisma generate
-```
-
-### 4. Run the development server
+### 3. Run the development server
 
 ```bash
 npm run dev
 ```
 
-### 5. Open the app
+### 4. Open the app
 
 Go to [http://localhost:3000](http://localhost:3000) in your browser.
 
